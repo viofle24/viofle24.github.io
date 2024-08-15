@@ -1,11 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Sharing</title>
+</head>
 <body>
+    <h1>Share a File</h1>
+    <input type="file" id="fileInput">
+    <button onclick="uploadFile()">Upload</button>
+    <p id="status"></p>
 
-<body style="background-color:powderblue;">
+    <!-- Firebase Configuration -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js"></script>
+    <script>
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBCH3aD9_Q9KRC-sk6MGy_hWpnHCVwJnm0",
+            authDomain: "fairtradereal.firebaseapp.com",
+            projectId: "fairtradereal",
+            storageBucket: "fairtradereal.appspot.com",
+            messagingSenderId: "401494335237",
+            appId: "1:401494335237:web:6544ff1daa036becf4a16c"
+        };
 
-<h1 style="font-family:verdana;">Hello World</h1>
-<p>owen lichstein is less intellectal than me..</p>
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const storage = firebase.storage();
 
+        function uploadFile() {
+            const file = document.getElementById('fileInput').files[0];
+            const storageRef = storage.ref('uploads/' + file.name);
+            const uploadTask = storageRef.put(file);
+
+            uploadTask.on('state_changed', 
+                (snapshot) => {
+                    document.getElementById('status').textContent = 'Uploading...';
+                }, 
+                (error) => {
+                    document.getElementById('status').textContent = 'Error: ' + error.message;
+                }, 
+                () => {
+                    document.getElementById('status').textContent = 'Upload complete!';
+                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                        document.getElementById('status').innerHTML = `File available at <a href="${downloadURL}" target="_blank">this link</a>`;
+                    });
+                }
+            );
+        }
+    </script>
 </body>
 </html>
