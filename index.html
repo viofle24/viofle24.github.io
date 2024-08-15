@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Sharing v2</title>
+    <title>File Sharing</title>
 </head>
 <body>
     <h1>Share a File</h1>
@@ -12,11 +12,14 @@
     <p id="status"></p>
 
     <!-- Firebase Configuration -->
-    <script type="module">
-        // Import the functions you need from the SDKs
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-        import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js"></script>
+    <script>
+        // Import the functions you need from Firebase SDKs
+        const { initializeApp } = firebase;
+        const { getStorage, ref, uploadBytesResumable, getDownloadURL } = firebase.storage;
+        const { getAnalytics } = firebase.analytics;
 
         // Your Firebase configuration
         const firebaseConfig = {
@@ -40,7 +43,8 @@
         // Initialize Firebase Storage
         const storage = getStorage(app);
 
-        function uploadFile() {
+        // Function to handle file upload
+        window.uploadFile = function() {
             const file = document.getElementById('fileInput').files[0];
             if (file) {
                 const storageRef = ref(storage, 'uploads/' + file.name);
@@ -65,7 +69,7 @@
             } else {
                 alert("Please select a file to upload.");
             }
-        }
+        };
     </script>
 </body>
 </html>
