@@ -22,7 +22,7 @@
             projectId: "fairtradereal",
             storageBucket: "fairtradereal.appspot.com",
             messagingSenderId: "401494335237",
-            appId: "1:401494335237:web:6544ff1daa036becf4a16c"
+            appId: "1:401494335237:web:6544ff1daa036becf4a16c",
         };
 
         // Initialize Firebase
@@ -31,23 +31,28 @@
 
         function uploadFile() {
             const file = document.getElementById('fileInput').files[0];
-            const storageRef = storage.ref('uploads/' + file.name);
-            const uploadTask = storageRef.put(file);
+            if (file) {
+                const storageRef = storage.ref('uploads/' + file.name);
+                const uploadTask = storageRef.put(file);
 
-            uploadTask.on('state_changed', 
-                (snapshot) => {
-                    document.getElementById('status').textContent = 'Uploading...';
-                }, 
-                (error) => {
-                    document.getElementById('status').textContent = 'Error: ' + error.message;
-                }, 
-                () => {
-                    document.getElementById('status').textContent = 'Upload complete!';
-                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                        document.getElementById('status').innerHTML = `File available at <a href="${downloadURL}" target="_blank">this link</a>`;
-                    });
-                }
-            );
+                uploadTask.on('state_changed', 
+                    (snapshot) => {
+                        document.getElementById('status').textContent = 'Uploading...';
+                    }, 
+                    (error) => {
+                        document.getElementById('status').textContent = 'Error: ' + error.message;
+                    }, 
+                    () => {
+                        document.getElementById('status').textContent = 'Upload complete!';
+                        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                            document.getElementById('status').innerHTML = `File uploaded successfully! <br> File available at: <a href="${downloadURL}" target="_blank">${downloadURL}</a>`;
+                            alert("Your file has been uploaded successfully!");
+                        });
+                    }
+                );
+            } else {
+                alert("Please select a file to upload.");
+            }
         }
     </script>
 </body>
