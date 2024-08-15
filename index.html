@@ -12,20 +12,21 @@
     <p id="status"></p>
 
     <!-- Firebase Configuration -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-analytics.js"></script>
     <script>
-        // Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBCH3aD9_Q9KRC-sk6MGy_hWpnHCVwJnm0",
-  authDomain: "fairtradereal.firebaseapp.com",
-  projectId: "fairtradereal",
-  storageBucket: "fairtradereal.appspot.com",
-  messagingSenderId: "401494335237",
-  appId: "1:401494335237:web:6544ff1daa036becf4a16c",
-  measurementId: "G-CRG4DD4XQ7"
-};
+        // Initialize Firebase
+        const firebaseConfig = {
+          apiKey: "AIzaSyBCH3aD9_Q9KRC-sk6MGy_hWpnHCVwJnm0",
+          authDomain: "fairtradereal.firebaseapp.com",
+          projectId: "fairtradereal",
+          storageBucket: "fairtradereal.appspot.com",
+          messagingSenderId: "401494335237",
+          appId: "1:401494335237:web:6544ff1daa036becf4a16c",
+          measurementId: "G-CRG4DD4XQ7"
+        };
+
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
