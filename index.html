@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Sharing</title>
+    <title>File Sharing v2</title>
 </head>
 <body>
     <h1>Share a File</h1>
@@ -12,9 +12,12 @@
     <p id="status"></p>
 
     <!-- Firebase Configuration -->
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js"></script>
-    <script>
+    <script type="module">
+        // Import the functions you need from the SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
+
         // Your Firebase configuration
         const firebaseConfig = {
           apiKey: "AIzaSyBCH3aD9_Q9KRC-sk6MGy_hWpnHCVwJnm0",
@@ -27,15 +30,21 @@
         };
 
         // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
+        const app = initializeApp(firebaseConfig);
         console.log("Firebase Initialized:", app);
-        const storage = firebase.storage();
+
+        // Initialize Firebase Analytics
+        const analytics = getAnalytics(app);
+        console.log("Firebase Analytics Initialized:", analytics);
+
+        // Initialize Firebase Storage
+        const storage = getStorage(app);
 
         function uploadFile() {
             const file = document.getElementById('fileInput').files[0];
             if (file) {
-                const storageRef = storage.ref('uploads/' + file.name);
-                const uploadTask = storageRef.put(file);
+                const storageRef = ref(storage, 'uploads/' + file.name);
+                const uploadTask = uploadBytesResumable(storageRef, file);
 
                 uploadTask.on('state_changed', 
                     null, 
@@ -46,7 +55,7 @@
                     () => {
                         console.log('Upload successful');
                         document.getElementById('status').textContent = 'Upload complete!';
-                        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                             console.log('File available at', downloadURL);
                             document.getElementById('status').innerHTML = `File uploaded successfully! <br> File available at: <a href="${downloadURL}" target="_blank">${downloadURL}</a>`;
                             alert("Your file has been uploaded successfully!");
