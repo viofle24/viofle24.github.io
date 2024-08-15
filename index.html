@@ -17,16 +17,18 @@
     <script>
         // Your Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyBCH3aD9_Q9KRC-sk6MGy_hWpnHCVwJnm0",
-            authDomain: "fairtradereal.firebaseapp.com",
-            projectId: "fairtradereal",
-            storageBucket: "fairtradereal.appspot.com",
-            messagingSenderId: "401494335237",
-            appId: "1:401494335237:web:6544ff1daa036becf4a16c",
+          apiKey: "AIzaSyBCH3aD9_Q9KRC-sk6MGy_hWpnHCVwJnm0",
+          authDomain: "fairtradereal.firebaseapp.com",
+          projectId: "fairtradereal",
+          storageBucket: "fairtradereal.appspot.com",
+          messagingSenderId: "401494335237",
+          appId: "1:401494335237:web:6544ff1daa036becf4a16c",
+          measurementId: "G-CRG4DD4XQ7"
         };
 
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
+        console.log("Firebase Initialized:", app);
         const storage = firebase.storage();
 
         function uploadFile() {
@@ -36,15 +38,16 @@
                 const uploadTask = storageRef.put(file);
 
                 uploadTask.on('state_changed', 
-                    (snapshot) => {
-                        document.getElementById('status').textContent = 'Uploading...';
-                    }, 
+                    null, 
                     (error) => {
+                        console.error('Upload failed:', error.message);
                         document.getElementById('status').textContent = 'Error: ' + error.message;
                     }, 
                     () => {
+                        console.log('Upload successful');
                         document.getElementById('status').textContent = 'Upload complete!';
                         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                            console.log('File available at', downloadURL);
                             document.getElementById('status').innerHTML = `File uploaded successfully! <br> File available at: <a href="${downloadURL}" target="_blank">${downloadURL}</a>`;
                             alert("Your file has been uploaded successfully!");
                         });
