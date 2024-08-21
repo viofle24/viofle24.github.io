@@ -74,19 +74,31 @@
         function joinSession() {
             currentSessionCode = document.getElementById('sessionCodeInput').value;
             const sessionRef = dbRef(database, `sessions/${currentSessionCode}`);
+            
             get(sessionRef).then((snapshot) => {
                 if (snapshot.exists()) {
                     const sessionData = snapshot.val();
-                    if (sessionData.user2 === null) {
+                    
+                    if (!sessionData.user2 && sessionData.user1 !== currentUserID) {
+                        // Join as the second user
                         set(dbRef(database, `sessions/${currentSessionCode}/user2`), currentUserID);
                         document.getElementById('uploadDiv').style.display = 'block';
+                        document.getElementById('status').textContent = `Joined session ${currentSessionCode} as user 2.`;
                         console.log("Joined session:", currentSessionCode);
+                    } else if (sessionData.user2 === currentUserID) {
+                        // Already joined as the second user
+                        document.getElementById('uploadDiv').style.display = 'block';
+                        document.getElementById('status').textContent = `Reconnected to session ${currentSessionCode} as user 2.`;
+                        console.log("Reconnected to session:", currentSessionCode);
                     } else {
-                        alert("This session is already full.");
+                        alert("This session is already full or you're trying to join your own session.");
                     }
                 } else {
                     alert("Session not found.");
                 }
+            }).catch((error) => {
+                console.error("Error joining session:", error);
+                alert("An error occurred while trying to join the session.");
             });
         }
 
