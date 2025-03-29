@@ -1,37 +1,50 @@
 <!DOCTYPE html>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en" data-theme="dark">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+        html, body {
+            background-color: #2d2d2d;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        .navbar {
+            background-color: #2d2d2d;
+            padding: 1rem 2rem ;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .navbar a {
+            color: #fff !important;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+        }
+    </style>
+</head>
+<body>
 
-  <style>
-    html, body {
-      background-color: #2d2d2d;
-      color: #fff;
-    }
-    .has-background-light {
-      background-color: #444 !important;
-    }
-    .has-text-dark {
-      color: #fff !important;
-    }
-    .navbar {
-      background-color: #333;
-    }
-  </style>
-
-<nav class="navbar is-dark">
-  <div class="navbar-brand">
-    <a class="navbar-item" href="#">levi portfolio</a>
+<!-- Clean Navbar -->
+<nav class="navbar">
+  <div>
+    <a href="#">Levi Portfolio</a>
   </div>
-  
-      <li><a href="projects.html">Projects</a></li>   
-      <li><a href="contact.html">Contact</a></li> 
-  
+  <div>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact</a>
+  </div>
 </nav>
 
-<html data-theme="dark">
-    <head>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    </head>
-    
-    <h1>hello world</h1>
+<!-- Page Content -->
+<section class="section">
+  <div class="container">
+    <h1 class="title has-text-white">Hello World</h1>
+  </div>
+</section>
 
+</body>
 </html>
